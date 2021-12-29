@@ -10,8 +10,8 @@ router.get('/', (req, res) => {
   Product.findAll({
     attributes:['id','product_name','price','stock','category_id'],
     include:[
-      { model:ProductTag,
-      attributes:['tag_id']
+      { model:Category,
+      attributes:['id','category_name']
      },
       {
         model:Tag,
@@ -36,8 +36,9 @@ router.get('/:id', (req, res) => {
       id:req.params.id
     },
     include:[
-      { model:ProductTag,
-      attributes:['tag_id']
+     {
+       model:Category,
+       attributes:['id','category_name']
      },
       {
         model:Tag,
@@ -69,10 +70,10 @@ router.post('/', (req, res) => {
     }
   */
   Product.create({
-    // product_name:req.body.product_name,
-    // price: req.body.price,
-    // stock:req.body.stock
-    // tag_id: req.body.tag_id
+    product_name:req.body.product_name,
+    price: req.body.price,
+    stock:req.body.stock,
+    tagIds: req.body.tagIds
   })
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
@@ -140,20 +141,18 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
   Product.destroy({
-    where: {
-      id:req.params.id
-    }
+    where: {id:req.params.id,}
   })
-  .the(dbProductData=>{
+  .then((dbProductData)=>{
     if(!dbProductData){
-      res.status(404).json({message:'No product found with this Id.'})
+      res.status(404).json({message:'No Product found with this Id.'})
       return;
     }
-    res.json(dbProductData)
+    res.status(200).json(dbProductData)
   })
-  .catch(err=>{
+  .catch((err)=>{
     console.log(err);
-    res.status(500).json(err)
+    res.status(400).json(err)
   })
 });
 
