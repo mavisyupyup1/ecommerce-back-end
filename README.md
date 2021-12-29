@@ -14,12 +14,14 @@ This e-commerce database back end is built with Express.js API and configured wi
 - Insomnia is required to test "POST, PUT and DELETE" routes
 
 # Usage
-- Use ``node seeds/index.js`` to seed the database
+- Open MySQL in shell with mysql -u root -p and enter password
+- Run mySQL command ``SOURCE db/schema.sql`` to create database
+- Run ``node seeds/index.js`` to seed the database
 - The application can be invoked by ``npm start``
 - Go to Insomnia 'http://localhost:3001/api/' to test all routes
 
 # Walk through video
-[walk-through](https://watch.screencastify.com/v/lexL6Q94UCWAIQ8AvtoW)
+[walk-through](https://watch.screencastify.com/v/dxDrRKVgPgkSYmXwUDYO)
 
 # Demo
 ![demo](assets/tag_demo.gif)
